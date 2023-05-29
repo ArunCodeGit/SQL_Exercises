@@ -1,0 +1,83 @@
+-----------------
+---ALTER TABLE---
+-----------------
+--To change EmpId type to VARCHAR(50) from INT
+CREATE TABLE EMP(EmpId INT, EmpName VARCHAR(50));
+
+INSERT INTO EMP VALUES(1001,'Arun');
+INSERT INTO EMP VALUES(1002,'Kumar');
+INSERT INTO EMP VALUES(1003,'Mani');
+INSERT INTO EMP VALUES(1004,'Jai');
+
+SELECT * FROM EMP;
+
+--Add a new column to the Emp table EmpAge of type int
+
+ALTER TABLE EMP ADD Phone VARCHAR(11)
+
+UPDATE EMP SET Phone=9087654332 WHERE EmpId='1001';
+UPDATE EMP SET Phone=8608853027 WHERE EmpId='1002';
+UPDATE EMP SET Phone=9159839018 WHERE EmpId='1003';
+UPDATE EMP SET Phone=9994877530 WHERE EmpId='1004';
+
+ALTER TABLE EMP ADD EmpAge INT
+
+UPDATE EMP SET EmpAge=23 WHERE EmpId='1001';
+UPDATE EMP SET EmpAge=25 WHERE EmpId='1002';
+UPDATE EMP SET EmpAge=24 WHERE EmpId='1003';
+UPDATE EMP SET EmpAge=27 WHERE EmpId='1004';
+
+SELECT * FROM EMP;
+
+ALTER TABLE EMP ALTER COLUMN EmpAge VARCHAR(25);
+
+
+--Drop a column from the emp table empage
+
+ALTER TABLE EMP DROP COLUMN EmpAge;
+
+SELECT * FROM EMP;
+
+UPDATE EMP SET Phone=9087651235 WHERE EmpId=1004;
+
+CREATE TABLE StudDetails(StuId INT PRIMARY KEY, StudName VARCHAR(50));
+
+--Drop a Constraint by name
+
+ALTER TABLE StudDetails DROP CONSTRAINT [PK__StudDeta__6CDFAB9581C12E2C]
+
+--Create a Constraint with name
+
+CREATE TABLE CustDetails(CustId INT CONSTRAINT my_pk01 PRIMARY KEY, CustName varchar(25), Age INT CONSTRAINT Age_Check Check(Age>18))
+
+--Drop a custom created constraint by name
+
+SELECT * FROM CustDetails;
+
+ALTER TABLE CustDetails DROP CONSTRAINT Age_Check;
+
+--Creating a table
+
+CREATE TABLE CUSTOMER(CustId INT PRIMARY KEY, CustName VARCHAR(25)NOT NULL, Phone VARCHAR(50));
+
+--With foreign key
+
+CREATE TABLE ORDERS(OrderId INT PRIMARY KEY, CId INT FOREIGN KEY REFERENCES CUSTOMER(CustId), Quantity INT);
+
+SELECT * FROM ORDERS;
+
+--Foreign Key with name
+
+CREATE TABLE Order1(OrderId INT CONSTRAINT my_pk02 PRIMARY KEY, CId INT CONSTRAINT my_fk_cust_order FOREIGN KEY REFERENCES CUSTOMER(CustId),Quantity INT);
+
+CREATE TABLE MyCust(CId INT, CName VARCHAR(25) CONSTRAINT my_pk2 PRIMARY KEY(CId));
+
+--Primary and Foreign key with alter table commands
+
+CREATE TABLE MyCus(CId INT NOT NULL, CName VARCHAR(20));
+
+ALTER TABLE MyCus ADD CONSTRAINT my_pk_2 PRIMARY KEY(CId);
+
+CREATE TABLE MyOrd(OrderId INT PRIMARY KEY, CId INT, Quantity INT);
+
+ALTER TABLE MyOrd ADD CONSTRAINT my_fk_3 FOREIGN KEY(CId) REFERENCES MyCus(CId);
